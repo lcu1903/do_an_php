@@ -5,7 +5,7 @@ if (!defined('DB_HOST')) {
 }
 
 if (!defined('DB_NAME')) {
-  define('DB_NAME', 'library');
+  define('DB_NAME', 'lib');
 }
 
 if (!defined('DB_USERNAME')) {
