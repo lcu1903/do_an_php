@@ -1,8 +1,6 @@
 <?php
 require "inc/init.php";
 $conn = require('inc/db.php');
-$books = Book::getAllBooks($conn);
-
 $page = null;
 $categoryFilter = null;
 $search_title = null;
@@ -14,8 +12,8 @@ $BASE_URL = "http://localhost/CNW/CT06/libraryphp/api/routes/book"
 
 <!-- API lấy tất cả tên thể loại của sách -->
 <?
-$url = $BASE_URL . "/get_all_categories.php";
-$response = file_get_contents($url);
+$urlAllCategory = $BASE_URL . "/get_all_categories.php";
+$response = file_get_contents($urlAllCategory);
 if ($response === false) {
     echo "Lỗi khi gọi API";
 } else {
@@ -29,12 +27,7 @@ if ($response === false) {
 }
 ?>
 
-<?
-// Đỗi từ category code thành category name
-foreach ($books as $book) {
-    $book->category_code = Book::getCategoryFromCategoryCode($conn, $book->category_code);
-};
-?>
+
 
 <!-- API  tất cả sách rồi thực hiện phân trang -->
 <?php
@@ -100,7 +93,7 @@ if ($search_title || $categoryFilter) {
     }
 } else {
     // API endpoint
-    $api_url = $BASE_URL . "/get_books.php";
+    $urlGetAllBook = $BASE_URL . "/get_books.php";
 
     // Số quyển sách trên mỗi trang
     $booksPerPage = 10;
@@ -115,7 +108,7 @@ if ($search_title || $categoryFilter) {
     // Gửi yêu cầu GET đến API để lấy dữ liệu sách
 
     $api_params = "?limit=$booksPerPage&page=$page";
-    $response = file_get_contents($api_url . $api_params);
+    $response = file_get_contents($urlGetAllBook . $api_params);
     $data = json_decode($response, true);
 
     // Dữ liệu trả về từ API

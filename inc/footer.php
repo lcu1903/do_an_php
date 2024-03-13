@@ -1,6 +1,8 @@
 <head>
   <link rel="stylesheet" href="./assets/css/style.css">
+
 </head>
+
 <body>
   <footer class="footer flex-between">
     <h3 class="footer__logo">
@@ -35,11 +37,9 @@
     </ul>
   </footer>
   <div class="text-center p-3 footer copyright">
-      © 2024 Copyright:
-      <a class="text-dark" href="https://mdbootstrap.com/"
-         >myLibrary.com</a
-        >
-    </div>
+    © 2024 Copyright:
+    <a class="text-dark" href="https://mdbootstrap.com/">myLibrary.com</a>
+  </div>
 </body>
 
 <script src="./js/bootstrap.min.js"></script>
