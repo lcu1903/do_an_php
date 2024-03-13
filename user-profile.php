@@ -1,12 +1,36 @@
-<? 
-    require "./inc/init.php";
-    $conn = require('inc/db.php');
-    require "./inc/header.php";
-    
+<?
+require "./inc/init.php";
+$conn = require('inc/db.php');
+require "./inc/header.php";
+
+$BASE_URL = "http://localhost/CNW/CT06/libraryphp/api/routes/user";
+// $userProfile_url = $BASE_URL . "/get_users.php";
+// $ch = curl_init($userProfile_url);
+// $headers = array(
+//     "Content-Type: application/x-www-form-urlencoded",
+//     "Authorization: Bearer " . $_COOKIE['access_token']
+// );
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+// curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+// curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+// $response = curl_exec($ch);
+// $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+// curl_close($ch);
+// if ($httpCode === 200) {
+//     $object = json_decode($response);
+//     echo $response;
+// } else {
+//     echo $response;
+//     echo "<script> 
+//             var cmm = JSON.stringify($response); 
+//             alert(cmm)      
+//         </script>";
+// }
+
 ?>
 
 <div class="content">
-    <div class="row"> 
+    <div class="row">
         <div class="col-lg-3">
             <div class="user-infomation">
                 <h5 class="text-center mt-3">Thông tin người dùng</h5>
@@ -21,7 +45,7 @@
         </div>
         <div class="col-lg-9">
             <table class="table">
-                <thead  align="center">
+                <thead align="center">
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Tên sách</th>
@@ -64,4 +88,4 @@
     </div>
 </div>
 
-<? require "./inc/footer.php";?>
+<? require "./inc/footer.php"; ?>

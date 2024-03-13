@@ -24,8 +24,64 @@
     }
 ?>
 
+<!-- API tạo sách -->
+<?
+    // Kiểm tra nếu có dữ liệu được gửi đi từ form POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Thu thập dữ liệu từ form
+    $title = $_POST["title"];
+    $available = $_POST["available"];
+    $description = $_POST["description"];
+    $category = $_POST["category"];
+    $author = $_POST["author"];
+    $image = $_POST["image"];
 
-<div class="content">
+    // Chuẩn bị dữ liệu để gửi đến API
+    $data = [
+        'title' => $title,
+        'available' => $available,
+        'description' => $description,
+        'category_code' => $category,
+        'author' => $author,
+        'image' => $image
+    ];
+
+    // Chuyển dữ liệu thành JSON
+    $data_json = json_encode($data);
+
+    // Thiết lập các tùy chọn cho yêu cầu HTTP
+    $options = [
+        'http' => [
+            'header' => "Content-Type: application/json\r\n",
+            'method' => 'POST',
+            'content' => $data_json
+        ]
+    ];
+
+    // Tạo ngữ cảnh HTTP
+    $context = stream_context_create($options);
+
+    // Gửi yêu cầu HTTP đến API
+    $url = "http://localhost/CT06/do_an/api/routes/book/create_book.php";
+    $result = file_get_contents($url, false, $context);
+
+    // Xử lý kết quả từ API
+    if ($result === false) {
+        echo "Lỗi khi gọi API";
+    } else {
+        $response = json_decode($result, true);
+        if ($response['success']) {
+            echo "Thêm sách thành công";
+        } else {
+            echo "Lỗi khi thêm sách: " . $response['message'];
+        }
+    }
+}
+    
+?>
+
+
+<div class="content" id="add_book">
     <div class="addBook justify-content-center">
       <div class="addBook">
         <div class="card">
@@ -71,7 +127,7 @@
                 </div>
               <div class="button-group">
                 <button type="submit" class="btn mr-2">Add Book</button>
-                <a href="#" class="btn btn-cancel">Cancel</a>
+                <a href="index.php" class="btn btn-cancel">Cancel</a>
               </div>
             </form>
           </div>

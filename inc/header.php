@@ -87,8 +87,8 @@ if (isset($_GET['log_out'])) {
         <li><a href="index.php">Services</a></li>
         <li><a href="index.php">Contact</a></li>
         <? if (isset($_COOKIE['access_token'])) : ?>
-          <li><a href="adduser.php">Add User</a></li>
-          <li><a href="addbook.php">Add Book</a></li>
+          <li><a href="add_user.php">Add User</a></li>
+          <li><a href="add_book.php">Add Book</a></li>
           <li><a href="./?log_out=true">Logout</a></li>
         <? else : ?>
           <li><a href="login.php">Login</a></li>
@@ -104,8 +104,8 @@ if (isset($_GET['log_out'])) {
             <li><a href="index.php">Services</a></li>
             <li><a href="index.php">Contact</a></li>
             <? if (isset($_COOKIE['access_token'])) : ?>
-              <li><a href="adduser.php">Add User</a></li>
-              <li><a href="addbook.php">Add Book</a></li>
+              <li><a href="add_user.php">Add User</a></li>
+              <li><a href="add_book.php">Add Book</a></li>
               <li><a href="./?log_out=true">Logout</a></li>
             <? else : ?>
               <li><a href="login.php">Login</a></li>

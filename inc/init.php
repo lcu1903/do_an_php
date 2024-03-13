@@ -9,7 +9,7 @@ spl_autoload_register(
   function ($className) {
     $fileName = strtolower($className) . ".php";
     $dirRoot = dirname(__DIR__);
-    require $dirRoot . "/classes/" . $fileName;
+    require $dirRoot . "\classes/" . $fileName;
   }
 );
 

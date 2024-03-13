@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $headers = array(
       "Content-Type: application/x-www-form-urlencoded",
     );
+    
     // Cấu hình cURL
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
@@ -44,13 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $object = json_decode($response);
       header('Location: login.php');
     } else {
-      // Xử lý lỗi
-      $object = json_decode($response);
-      $error = $object->error;
-
-      echo "<script>  
-                      
-      </script>";
+      // Xử lý lỗi phản hồi
+      echo "<script> 
+        var cmm = JSON.stringify($response); 
+                  alert(cmm)      
+        </script>";
     }
   }
 }

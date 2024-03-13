@@ -38,13 +38,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($httpCode === 200) {
         // Xử lý phản hồi thành công
         $object = json_decode($response);
+        echo $object->role;
         $accessToken =  $object->access_token;
         $refreshToken =  $object->refresh_token;
+        $role = $object->role;
         //add to local storage
         $expirationTime = time() + (5 * 24 * 60 * 60);
         setcookie("access_token", $accessToken, $expirationTime, "/");
         setcookie("refresh_token", $refreshToken, $expirationTime, "/");
-        header("Location: index.php");
+        setcookie("role", $role, $expirationTime, "/");
     } else {
         // Xử lý lỗi
         echo "<script> 

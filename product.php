@@ -1,61 +1,64 @@
 <?
 require "./inc/init.php";
 $conn = require('inc/db.php');
-
+$BASE_URL = "http://localhost/CNW/CT06/libraryphp/api/routes/book";
 require "./inc/header.php";
 ?>
 
-<div class="content">
-    <div class="row">
-        <div class="filter col-lg-3">
-            <div class="filter-title mb-2">
-                <h3>Filter by Category</h3>
-            </div>
+<?
 
-            <div class="list-group">
-                <button type="button" class="list-group-item list-group-item-action active" data-category="all">All</button>
-                <button type="button" class="list-group-item list-group-item-action" data-category="fiction">Fiction</button>
-                <button type="button" class="list-group-item list-group-item-action" data-category="non-fiction">Non-Fiction</button>
-                <button type="button" class="list-group-item list-group-item-action" data-category="sci-fi">Sci-Fi</button>
-                <button type="button" class="list-group-item list-group-item-action" data-category="fiction">Fiction</button>
-                <button type="button" class="list-group-item list-group-item-action" data-category="non-fiction">Non-Fiction</button>
-                <button type="button" class="list-group-item list-group-item-action" data-category="sci-fi">Sci-Fi</button>
-            </div>
-        </div>
-        <div class="col-lg-9">
-            <div class="search row mb-3">
-                <div class="col">
-                    <div class="input-group">
-                        <input type="text" class="form-control rounded-3" id="search-input" placeholder="Search by title">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary ms-2" type="button" id="search-button">Search</button>
-                        </div>
-                    </div>
+// Gửi yêu cầu GET đến API để lấy dữ liệu sách
+$url = $BASE_URL . "/get_books.php";
+$response = file_get_contents($url . "?limit=99&page=1");
+$data = json_decode($response, true);
+
+// Dữ liệu trả về từ API
+$books = $data['data']; // Sửa key thành 'data' thay vì 'books'
+?>
+
+<div class="content" id="product">
+    <div class="title_product">
+        <h2>My book card</h2>
+    </div>
+
+    <!-- Hiển thị sản phẩm theo dạng card -->
+    <div class="product_cards" id="book-container">
+        <?php foreach ($books as $key => $b) : ?>
+            <div class="card" style="width: 16rem;">
+                <img src="<?php echo $b['image'] ?>" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo $b['title'] ?></h5>
+                    <p class="card-text"><?php echo $b['description'] ?></p>
+                    <a href="http://localhost/CNW/CT06/libraryphp/do_an_php/book-detail.php?id=<? echo $b['id'] ?>" class="btn btn-read">Book Detail</a>
                 </div>
             </div>
-
-
-            <!-- Hiển thị sản phẩm theo dạng card -->
-            <div class="product-cards">
-
-                <? foreach ($books as $b) : ?>
-
-                    <div class="card product-card-item">
-                        <div class="card-img-book">
-                            <img src="<? echo $b->image ?>" class="card-img-top" alt="...">
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title"><? echo $b->title ?></h5>
-                            <p class="card-text"><? echo $b->description ?></p>
-                            <a href="#" class="btn">Book Detail</a>
-                        </div>
-                    </div>
-                <? endforeach; ?>
-            </div>
-
-        </div>
+            <?php if ($key == 7) break; ?> <!-- Stop after showing 8 books -->
+        <?php endforeach; ?>
     </div>
+    <button id="load-more-btn" class="btn btn-read-more">Read more</button>
+
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var offset = 8; // Starting offset to load more books
+
+        $('#load-more-btn').click(function() {
+            $.ajax({
+                url: 'load_more_card-books.php',
+                type: 'POST',
+                data: {
+                    offset: offset
+                },
+                success: function(response) {
+                    $('#book-container').append(response); // Append loaded books
+                    offset += 8; // Increment offset for next request
+                }
+            });
+        });
+    });
+</script>
 
 
 <? require "./inc/footer.php"; ?>
